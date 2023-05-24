@@ -6,6 +6,7 @@ import { users } from '../db/schema.js'
 import { SqliteError } from 'better-sqlite3'
 import { signJWT } from '../lib/jwt.js'
 import { eq } from 'drizzle-orm'
+import { isAuth } from '../middlewares/auth.middleware.js'
 
 const router = Router()
 
@@ -70,6 +71,16 @@ router.post('/signin', async (req: Request, res: Response, next: NextFunction) =
     })
   }
   catch (error) {
+    next(error)
+  }
+})
+
+router.post('/check', isAuth, async (req: Request, res: Response, next: NextFunction) => {
+  try{
+    res.status(200)
+    res.json(req.user)
+  }
+  catch(error){
     next(error)
   }
 })
