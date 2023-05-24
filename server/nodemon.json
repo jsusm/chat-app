@@ -1,0 +1,5 @@
+{
+  "exec": "pnpm develop",
+  "watch": ["src"],
+  "ext": ".ts,.json"
+}
