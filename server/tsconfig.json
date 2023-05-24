@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "module": "es2020",
-    "allowJs": true,
+    "module": "NodeNext",
     "removeComments": true,
     "resolveJsonModule": true,
     "typeRoots": [
@@ -15,7 +14,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "nodenext",
     "skipLibCheck": true
   },
   "include": [
