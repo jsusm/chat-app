@@ -13,8 +13,9 @@ app.use(bodyParser.json())
 app.use(cors({
   origin: ['http://localhost:1573'],
 }))
-app.use(errorMiddleware)
 
 app.use('/api', routes)
+
+app.use(errorMiddleware)
 
 export default app

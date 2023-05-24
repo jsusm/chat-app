@@ -1,4 +1,6 @@
-import { db } from './db/db.js'
-import { users } from './db/schema.js'
+import app from "./app.js";
 
-console.log(db.select().from(users).all())
+const PORT = process.env.PORT ?? 8080
+
+console.log(`Listen on port ${PORT}`)
+app.listen(PORT)
