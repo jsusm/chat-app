@@ -3,7 +3,7 @@ import { createMessageSchema, findMessagesSchema, paginationSchema } from '../sc
 import { isAuth } from '../middlewares/auth.middleware.js'
 import { db } from '../db/db.js'
 import { chatSubs, chats, messages, users } from '../db/schema.js'
-import { and, asc, desc, eq, lt } from 'drizzle-orm'
+import { and, desc, eq, lt } from 'drizzle-orm'
 
 const router = Router()
 
