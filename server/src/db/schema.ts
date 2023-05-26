@@ -21,7 +21,7 @@ export const chatSubs = sqliteTable('chat_subscriptions', {
 
 export const messages = sqliteTable('messages', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  chatSubId: integer('id').notNull().references(() => chatSubs.id),
+  chatSubId: integer('chat_sub_id').notNull().references(() => chatSubs.id),
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
   content: text('content').notNull(),
 })

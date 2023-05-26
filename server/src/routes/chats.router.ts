@@ -69,6 +69,7 @@ router.get('/', isAuth, (req: Request, res: Response, next: NextFunction) => {
     const chatList = db
       .select({
         id: chats.id,
+        subId: _sub.id,
         member: {
           id: users.id,
           name: users.name,
