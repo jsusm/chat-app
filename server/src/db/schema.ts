@@ -15,13 +15,13 @@ export const chats = sqliteTable('chats', {
 
 export const chatSubs = sqliteTable('chat_subscriptions', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  chatId: integer('chat_id').references(() => chats.id),
-  userId: integer('author_id').references(() => users.id),
+  chatId: integer('chat_id').notNull().references(() => chats.id),
+  userId: integer('author_id').notNull().references(() => users.id),
 })
 
 export const messages = sqliteTable('messages', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  chatSubId: integer('id').references(() => chatSubs.id),
+  chatSubId: integer('id').notNull().references(() => chatSubs.id),
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
   content: text('content').notNull(),
 })
