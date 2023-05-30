@@ -11,6 +11,10 @@ const routes: RouteDefinition[] = [
     path: '/signup',
     component: lazy(() => import('./pages/signup'))
   },
+  {
+    path: '/signin',
+    component: lazy(() => import('./pages/signin'))
+  },
 ]
 
 const App: Component = () => {

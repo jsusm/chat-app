@@ -12,9 +12,9 @@ export const Button: Component<ButtonProps> = (props) => {
       {...props}
       disabled={props.loading}
       class={twMerge(`
-      rounded-md bg-blue-600 px-6 py-1.5 font-medium text-white drop-shadow 
+      rounded-md bg-blue-600 px-6 py-1.5 font-medium text-white drop-shadow
       flex justify-center items-center
-      hover:bg-blue-700 focus:outline-none focus:ring active:bg-blue-500 
+      hover:bg-blue-700 focus:outline-none focus:ring active:bg-blue-500
       `, props.class)}
     >
       <span class="transition-all" classList={{ "text-transparent": props.loading }}>

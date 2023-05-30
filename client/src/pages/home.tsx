@@ -28,7 +28,7 @@ export default function Home() {
               </A>
               <A
                 class="block w-full rounded-md sm:text-lg bg-slate-50 border border-gray-300 px-6 py-1.5 font-medium text-slate-600 drop-shadow hover:text-blue-700 focus:outline-none focus:ring active:text-blue-500 sm:w-auto"
-                href="/about"
+                href="/signin"
               >
                 Sign in
               </A>

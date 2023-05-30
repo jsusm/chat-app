@@ -1,10 +1,10 @@
-import { ParentProps, createContext, createSignal, useContext } from "solid-js";
+import { Accessor, ParentProps, createContext, createSignal, useContext } from "solid-js";
 import { AuthData, SigninPayload, SignupPayload, signin as _signin, signup as _signup, clearUserData } from "../services/auth";
 import { getUserfromLocal } from "../services/auth";
 
 export const AuthContext = createContext<
   {
-    data: AuthData | undefined
+    data: Accessor<AuthData | undefined>
     signup(payload: SignupPayload): ReturnType<typeof _signup>
     signin(payload: SigninPayload): ReturnType<typeof _signin>
     logout(): void
@@ -15,7 +15,6 @@ export const useAuth = () => useContext(AuthContext)
 
 export function AuthProvider(props: ParentProps) {
   const [auth, setAuth] = createSignal<AuthData | undefined>(getUserfromLocal())
-  // fetch data
   const signup = async (payload: SignupPayload) => {
     const res = await _signup(payload)
     if (!res.success) {
@@ -37,7 +36,7 @@ export function AuthProvider(props: ParentProps) {
     setAuth(undefined)
   }
   return (
-    <AuthContext.Provider value={{ data: auth(), signup, signin, logout }}>
+    <AuthContext.Provider value={{ data: auth, signup, signin, logout }}>
       {props.children}
     </AuthContext.Provider>
   )

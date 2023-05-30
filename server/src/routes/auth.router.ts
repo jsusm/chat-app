@@ -75,7 +75,7 @@ router.post('/signin', async (req: Request, res: Response, next: NextFunction) =
   }
 })
 
-router.post('/check', isAuth, async (req: Request, res: Response, next: NextFunction) => {
+router.get('/check', isAuth, async (req: Request, res: Response, next: NextFunction) => {
   try{
     res.status(200)
     res.json(req.user)

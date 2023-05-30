@@ -24,11 +24,11 @@ export function Header() {
   const auth = useAuth()
   return (
     <header class="flex justify-between items-center px-4 py-3 sm:px-8">
-      <span class="text-lg font-extrabold text-gray-800">
+      <span class="text-lg font-extrabold text-gray-800 leading-9">
         Chat app
       </span>
-      <Show when={auth.data?.user}>
-        <Profile name={auth.data.user.name} onLogout={auth.logout} />
+      <Show when={auth.data()?.user}>
+        <Profile name={auth.data().user.name} onLogout={auth.logout} />
       </Show>
     </header>
   )
