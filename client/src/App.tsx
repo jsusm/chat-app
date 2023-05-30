@@ -1,18 +1,25 @@
 import { Component, lazy } from 'solid-js';
 import { Router, RouteDefinition, useRoutes } from '@solidjs/router'
+import { AuthProvider } from './context/auth';
 
 const routes: RouteDefinition[] = [
   {
     path: '/',
     component: lazy(() => import('./pages/home'))
-  }
+  },
+  {
+    path: '/signup',
+    component: lazy(() => import('./pages/signup'))
+  },
 ]
 
 const App: Component = () => {
   const Routes = useRoutes(routes)
   return (
     <Router>
-      <Routes />
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
     </Router>
   );
 };

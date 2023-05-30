@@ -11,7 +11,7 @@ const app = express.default()
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 app.use(cors({
-  origin: ['http://localhost:1573'],
+  origin: ['http://localhost:3000'],
 }))
 
 app.use('/api', routes)

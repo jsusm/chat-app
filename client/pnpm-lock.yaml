@@ -4,6 +4,9 @@ dependencies:
   '@solidjs/router':
     specifier: ^0.8.2
     version: 0.8.2(solid-js@1.7.5)
+  '@tabler/icons-solidjs':
+    specifier: ^2.20.0
+    version: 2.20.0(solid-js@1.7.5)
   '@tailwindcss/forms':
     specifier: ^0.5.3
     version: 0.5.3(tailwindcss@3.3.2)
@@ -629,6 +632,19 @@ packages:
       solid-js: ^1.5.3
     dependencies:
       solid-js: 1.7.5
+    dev: false
+
+  /@tabler/icons-solidjs@2.20.0(solid-js@1.7.5):
+    resolution: {integrity: sha512-NPomD5Ip7v64RlITsEzQWXT8ZYEMBjiQgjtJ4nPqGb9X4rBcrJRZsIjNxXlLGer5yclQ3G8KqFzmx+hkLJyvyQ==}
+    peerDependencies:
+      solid-js: ^1.4.7
+    dependencies:
+      '@tabler/icons': 2.20.0
+      solid-js: 1.7.5
+    dev: false
+
+  /@tabler/icons@2.20.0:
+    resolution: {integrity: sha512-BsUEJoqREs8bqcrf5HfJBq6/rDvsRI3h+T+0X1o7i8LBHonsH0iAngcyL0I82YKoSy9NiVDvM3LV63zDP0nPYQ==}
     dev: false
 
   /@tailwindcss/forms@0.5.3(tailwindcss@3.3.2):
