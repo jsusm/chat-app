@@ -1,5 +1,6 @@
 import { ParentProps, createContext, createSignal, useContext } from "solid-js";
 import { AuthData, SigninPayload, SignupPayload, signin as _signin, signup as _signup, clearUserData } from "../services/auth";
+import { getUserfromLocal } from "../services/auth";
 
 export const AuthContext = createContext<
   {
@@ -13,7 +14,8 @@ export const AuthContext = createContext<
 export const useAuth = () => useContext(AuthContext)
 
 export function AuthProvider(props: ParentProps) {
-  const [auth, setAuth] = createSignal<AuthData | undefined>(undefined)
+  const [auth, setAuth] = createSignal<AuthData | undefined>(getUserfromLocal())
+  // fetch data
   const signup = async (payload: SignupPayload) => {
     const res = await _signup(payload)
     if (!res.success) {

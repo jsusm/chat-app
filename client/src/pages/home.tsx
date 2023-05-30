@@ -1,12 +1,14 @@
 import { A } from "@solidjs/router"
+import { Header } from "../components/Header"
 export default function Home() {
   return (
-    <>
-      <section class="bg-gray-50 isolate overflow-hidden relative">
+    <div class="bg-gray-50 isolate min-h-screen">
+      <Header />
+      <section class="overflow-y-visible overflow-x-clip relative">
         <div class="absolute top-1/4 left-1/3 w-screen h-20 rounded-[100%] rotate-12 blur-3xl -z-10 bg-gradient-to-t from-sky-200 to-indigo-400 lg:top-1/4" />
         <div class="absolute bottom-1/4 left-1/4 w-1/4 h-20 rounded-[100%] rotate-[60deg] blur-3xl -z-10 bg-gradient-to-t from-blue-700 to-violet-600 lg:bottom-1/4 opacity-50" />
         <div
-          class="mx-auto max-w-screen-xl px-4 py-32 lg:flex h-screen lg:items-center"
+          class="mx-auto max-w-screen-xl px-4 py-32 lg:flex h-full lg:items-center"
         >
           <div class="mx-auto max-w-xl text-center">
             <h1 class="bg-gradient-to-t from-slate-800 to-slate-950 bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl">
@@ -34,6 +36,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }

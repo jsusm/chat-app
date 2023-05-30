@@ -73,7 +73,7 @@ export function saveUserToLocal(user: User, token: string) {
   window.localStorage.setItem('token', JSON.stringify(token))
 }
 
-export function getUserfromLocal() {
+export function getUserfromLocal(): AuthData | undefined {
   const rawUser = window.localStorage.getItem('user')
   if (rawUser == '') {
     return undefined
