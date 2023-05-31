@@ -1,15 +1,14 @@
 import { Show } from "solid-js"
-import { Header } from "../components/Header"
 import LandingSection from "../components/Landing"
+import Chat from "../components/Chat/chat"
 import { useAuth } from "../context/auth"
 
 export default function Home() {
   const auth = useAuth()
   return (
-    <div class="bg-gray-50 isolate min-h-screen">
-      <Header />
-      <Show when={!auth.data()}>
-        <LandingSection />
+    <div class="bg-gray-50 isolate min-h-screen flex flex-col">
+      <Show when={auth.data()} fallback={<LandingSection />}>
+        <Chat />
       </Show>
     </div>
   )
