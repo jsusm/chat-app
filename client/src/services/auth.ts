@@ -1,5 +1,6 @@
 import { ActionType } from "../lib/actions";
 import { FormError, ApiFormError, parseFormError } from "../lib/formError";
+import { serverUrl } from "./shared";
 
 export interface User {
   id: number,
@@ -16,15 +17,13 @@ export interface SigninPayload {
   password: string,
 }
 
-const serverURL = 'http://localhost:8080/api'
-
 export type AuthData = {
   user: User;
   token: string;
 }
 
 export async function signup(payload: SignupPayload): Promise<ActionType<AuthData, FormError<SignupPayload>>> {
-  const res = await fetch(`${serverURL}/auth/signup`, {
+  const res = await fetch(`${serverUrl}/auth/signup`, {
     method: 'POST',
     mode: 'cors',
     headers: {
@@ -48,7 +47,7 @@ export async function signup(payload: SignupPayload): Promise<ActionType<AuthDat
 }
 
 export async function signin(payload: SigninPayload): Promise<ActionType<AuthData, FormError<SigninPayload>>> {
-  const res = await fetch(`${serverURL}/auth/signin`, {
+  const res = await fetch(`${serverUrl}/auth/signin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

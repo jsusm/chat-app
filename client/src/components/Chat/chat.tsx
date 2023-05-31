@@ -2,6 +2,8 @@ import { IconSend } from "@tabler/icons-solidjs";
 import { Button } from "../Button";
 import { Header } from "../Header";
 import { Component, For } from "solid-js";
+import { useChats } from "../../context/chats";
+import { ChatInstance } from "../../services/chats";
 
 type AvatarProps = {
   name: string
@@ -26,7 +28,7 @@ const Contact: Component<ContactProps> = (props) => (
 )
 
 type SideBarProps = {
-  chats: { name: string }[]
+  chats: ChatInstance[]
 }
 const SideBar: Component<SideBarProps> = (props) => (
   <div class="border-r border-r-400 max-w-[220px] w-full">
@@ -35,7 +37,7 @@ const SideBar: Component<SideBarProps> = (props) => (
       <For each={props.chats}>
         {(chat) => (
           <li>
-            <Contact name={chat.name} />
+            <Contact name={chat.member.name} />
           </li>
         )}
       </For>
@@ -53,15 +55,13 @@ const ChatHeader = () => (
 )
 
 export default function Chat() {
-  const contacts = [
-    { name: 'Smith' },
-    { name: 'Sanches' },
-  ]
+  const chats = useChats()
+  chats.fetch()
   return (
     <>
       <Header />
       <div class="flex h-full">
-        <SideBar chats={contacts} />
+        <SideBar chats={chats.data} />
         <div class="flex flex-col col-span-5 flex-1 relative max-w-4xl mx-auto">
           <ChatHeader />
           <div class="flex flex-col justify-end px-6 gap-3 flex-1">

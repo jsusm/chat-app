@@ -1,4 +1,4 @@
-export type ActionType<T, Err extends any = {}> =
+export type ActionType<T, Err extends any = {message: string}> =
   {
     success: true,
     result: T
