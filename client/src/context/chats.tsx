@@ -31,7 +31,7 @@ export function ChatProvider(props: ParentProps) {
         data: chats,
         fetch,
         create,
-        }}
+      }}
     >
       {props.children}
     </chatContext.Provider>

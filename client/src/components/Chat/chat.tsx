@@ -1,58 +1,9 @@
 import { IconSend } from "@tabler/icons-solidjs";
 import { Button } from "../Button";
 import { Header } from "../Header";
-import { Component, For } from "solid-js";
 import { useChats } from "../../context/chats";
-import { ChatInstance } from "../../services/chats";
-
-type AvatarProps = {
-  name: string
-}
-const Avatar: Component<AvatarProps> = (props) => (
-  <div class="w-9 aspect-square rounded-full overflow-hidden" >
-    <img src={`https://api.dicebear.com/6.x/micah/svg?seed=${props.name}`} />
-  </div>
-)
-
-type ContactProps = {
-  name: string
-}
-
-const Contact: Component<ContactProps> = (props) => (
-  <button class="flex items-center gap-3 transition-all w-full py-1.5 px-3 rounded-md border border-transparent hover:border-gray-300">
-    <Avatar name={props.name} />
-    <span class="text-gray-900">
-      {props.name}
-    </span>
-  </button>
-)
-
-type SideBarProps = {
-  chats: ChatInstance[]
-}
-const SideBar: Component<SideBarProps> = (props) => (
-  <div class="border-r border-r-400 max-w-[220px] w-full">
-    <p class="font-medium mx-6 py-3 border-b border-b-gray-300">Chats</p>
-    <ul class="px-3 py-1.5">
-      <For each={props.chats}>
-        {(chat) => (
-          <li>
-            <Contact name={chat.member.name} />
-          </li>
-        )}
-      </For>
-    </ul>
-  </div>
-)
-
-const ChatHeader = () => (
-  <div class="flex items-center gap-3 py-1.5 mb-3 mx-6 border-b border-b-gray-300">
-    <Avatar name="Marco" />
-    <span class="text-gray-900 font-medium text-lg">
-      Marco
-    </span>
-  </div>
-)
+import { ChatHeader } from "./ChatHeader";
+import { SideBar } from "./SideBar";
 
 export default function Chat() {
   const chats = useChats()
