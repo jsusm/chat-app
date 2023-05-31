@@ -76,9 +76,9 @@ router.get('/', isAuth, (req: Request, res: Response, next: NextFunction) => {
         }
       })
       .from(chatSubs)
-      .leftJoin(chats, eq(chatSubs.chatId, chats.id))
-      .leftJoin(_sub, eq(chats.id, _sub.chatId))
-      .leftJoin(users, eq(_sub.userId, users.id))
+      .innerJoin(chats, eq(chatSubs.chatId, chats.id))
+      .innerJoin(_sub, eq(chats.id, _sub.chatId))
+      .innerJoin(users, eq(_sub.userId, users.id))
       .where(and(
         eq(chatSubs.userId, req.user.id),
         ne(users.id, req.user.id)
