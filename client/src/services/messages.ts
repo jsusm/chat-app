@@ -1,5 +1,4 @@
 import { ActionType } from "../lib/actions";
-import { ApiFormError, FormError, parseFormError } from "../lib/formError";
 import { serverUrl } from "./shared";
 
 export type RawMessage = {
@@ -26,9 +25,7 @@ export async function fetchMessages(token: string, chatId: number): Promise<Acti
     return { success: false, error: { message: 'Something went wrong.' } }
   }
   const json: RawMessage[] = await res.json()
-  console.log(json)
   const messages = json.map((x) => ({ ...x, createdAt: new Date(x.createdAt) }))
-  console.log(messages)
   return { success: true, result: messages }
 }
 
@@ -49,8 +46,6 @@ export async function createMessage(token: string, chatId: number, payload: Crea
     return { success: false, error: { message: 'Something went wrong.' } }
   }
   const json: RawMessage = await res.json()
-  console.log(json)
   const messages = { ...json, createdAt: new Date(json.createdAt) }
-  console.log(messages)
   return { success: true, result: messages }
 }

@@ -25,7 +25,6 @@ export function ChatProvider(props: ParentProps) {
   const selectChat = (id: number) => setSelectedChatId(id)
   const fetch = async (token: string) => {
     const chatList = await fetchChats(token)
-    console.log(chatList)
     if (chatList.success === true) {
       setChats(chatList.result.map(x => ({ ...x, messages: [] })))
     }
@@ -38,14 +37,13 @@ export function ChatProvider(props: ParentProps) {
   const sendMessage = async (payload: CreateMessagePayload) => {
     createMessage(auth.data().token, selectedChatId(), payload)
       .then(res => {
-        console.log({res})
         if (res.success) {
           setChats(c => c.id === selectedChatId(), 'messages', x => [res.result, ...x])
         }
       })
   }
   createEffect(() => {
-    if(selectedChatId() === null) return
+    if (selectedChatId() === null) return
     fetchMessages(auth.data().token, selectedChatId())
       .then(res => {
         if (res.success) {
