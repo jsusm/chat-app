@@ -2,6 +2,9 @@ import { Server } from "socket.io";
 import { WebSocket } from "./types.js";
 import * as http from 'http'
 import { verifyJWT } from "./lib/jwt.js";
+import { db } from "./db/db.js";
+import { chatSubs, chats } from "./db/schema.js";
+import { eq } from "drizzle-orm";
 
 export class WS {
   public static instance: WS
@@ -24,7 +27,18 @@ export class WS {
       verifyJWT(token)
         .then(({user}) => {
           socket.data.user = user
+          const subscription = db
+            .select({
+              chatId: chatSubs.chatId
+            })
+            .from(chatSubs)
+            .where(eq(chatSubs.userId, user.id))
+            .all()
           socket.join(`user-${user.id}`)
+          subscription.forEach((s) => {
+            socket.join(`chat-${s.chatId}`)
+          })
+          console.log('socketRooms:', socket.rooms)
         })
     })
   }

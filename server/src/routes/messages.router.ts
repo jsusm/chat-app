@@ -4,6 +4,7 @@ import { isAuth } from '../middlewares/auth.middleware.js'
 import { db } from '../db/db.js'
 import { chatSubs, chats, messages, users } from '../db/schema.js'
 import { and, desc, eq, lt } from 'drizzle-orm'
+import { WS } from '../ws.js'
 
 const router = Router()
 
@@ -33,7 +34,12 @@ router.post('/:chatId', isAuth, (req, res, next) => {
       })
       .get()
     res.status(201)
-    res.json({...message, authorId: req.user.id})
+    const msg = {...message, authorId: req.user.id}
+    res.json(msg)
+    WS.instance.io
+      .in(`chat-${params.chatId}`)
+      .except(`user-${req.user.id}`)
+      .emit('message', msg)
   } catch (error) {
     next(error)
   }
@@ -65,7 +71,6 @@ router.get('/:chatId', isAuth, (req, res, next) => {
       .limit(20)
       .all()
 
-    console.log(messageList)
     res.status(201)
     res.json(messageList)
   } catch (error) {

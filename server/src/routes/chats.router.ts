@@ -5,6 +5,7 @@ import { isAuth } from '../middlewares/auth.middleware.js'
 import { createChatSchema } from '../schemas/chat.schema.js'
 import { eq, and, ne, or } from 'drizzle-orm'
 import { alias } from 'drizzle-orm/sqlite-core'
+import { WS } from '../ws.js'
 
 const router = Router()
 
@@ -54,7 +55,11 @@ router.post('/', isAuth, (req: Request, res: Response, next: NextFunction) => {
       .insert(chatSubs)
       .values({ chatId: chat.id, userId: couple.id })
       .run()
+
     res.sendStatus(201)
+    // subcribe to chat's users to chat-{id} room
+    WS.instance.io.in(`user-${req.user.id}`).socketsJoin(`chat-${chat.id}`)
+    WS.instance.io.in(`user-${couple.id}`).socketsJoin(`chat-${chat.id}`)
   } catch (error) {
     next(error)
   }

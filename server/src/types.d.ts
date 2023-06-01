@@ -5,8 +5,16 @@ export interface User {
   name: string;
 }
 
+export interface Message {
+  id: number,
+  authorId: number,
+  content: string,
+  createdAt: Date
+}
+
 namespace WebSocket {
   interface ServerToClientEvents {
+    'message': (msg: Message) => void
   }
 
   interface ClientToServerEvents {
