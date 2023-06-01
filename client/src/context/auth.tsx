@@ -1,5 +1,5 @@
 import { Accessor, ParentProps, createContext, createEffect, createSignal, useContext } from "solid-js";
-import { AuthData, SigninPayload, SignupPayload, signin as _signin, signup as _signup, clearUserData } from "../services/auth";
+import { AuthData, SigninPayload, SignupPayload, signin as _signin, signup as _signup, clearUserData, verifyToken } from "../services/auth";
 import { getUserfromLocal } from "../services/auth";
 
 export const AuthContext = createContext<
@@ -34,6 +34,15 @@ export function AuthProvider(props: ParentProps) {
   const logout = () => {
     clearUserData()
     setAuth(undefined)
+  }
+  // verify token authenticity
+  if (auth().token) {
+    verifyToken(auth().token)
+      .then(res => {
+        if (res.success === false) {
+          logout()
+        }
+      })
   }
   return (
     <AuthContext.Provider value={{ data: auth, signup, signin, logout }}>

@@ -67,6 +67,19 @@ export async function signin(payload: SigninPayload): Promise<ActionType<AuthDat
   return { success: true, result: json }
 }
 
+export async function verifyToken(token: string): Promise<ActionType<User>> {
+  const res = await fetch(`${serverUrl}/auth/check`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  if(!res.ok){
+    return { success: false, error: {'message': 'Invalid Token'}}
+  }
+  const json: User = await res.json()
+  return { success: true, result: json}
+}
+
 export function saveUserToLocal(user: User, token: string) {
   window.localStorage.setItem('user', JSON.stringify(user))
   window.localStorage.setItem('token', token)
