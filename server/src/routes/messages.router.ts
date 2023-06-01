@@ -47,9 +47,9 @@ router.get('/:chatId', isAuth, (req, res, next) => {
         userId: users.id,
       })
       .from(chats)
-      .leftJoin(chatSubs, eq(chatSubs.chatId, chats.id))
-      .leftJoin(users, eq(chatSubs.userId, users.id))
-      .leftJoin(messages, eq(messages.chatSubId, chatSubs.id))
+      .innerJoin(chatSubs, eq(chatSubs.chatId, chats.id))
+      .innerJoin(users, eq(chatSubs.userId, users.id))
+      .innerJoin(messages, eq(messages.chatSubId, chatSubs.id))
       .orderBy(desc(messages.createdAt))
       .where(
         and(
