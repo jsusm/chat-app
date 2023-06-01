@@ -1,6 +1,7 @@
 import { Component, lazy } from 'solid-js';
 import { Router, RouteDefinition, useRoutes } from '@solidjs/router'
 import { AuthProvider } from './context/auth';
+import { ChatProvider } from './context/chats';
 
 const routes: RouteDefinition[] = [
   {
@@ -15,6 +16,10 @@ const routes: RouteDefinition[] = [
     path: '/signin',
     component: lazy(() => import('./pages/signin'))
   },
+  {
+    path: '/chats/create',
+    component: lazy(() => import('./pages/createChat'))
+    },
 ]
 
 const App: Component = () => {
@@ -22,7 +27,9 @@ const App: Component = () => {
   return (
     <Router>
       <AuthProvider>
-        <Routes />
+        <ChatProvider>
+          <Routes />
+        </ChatProvider>
       </AuthProvider>
     </Router>
   );

@@ -18,7 +18,10 @@ export function ChatProvider(props: ParentProps) {
   const auth = useAuth()
   const fetch = async () => {
     const chatList = await fetchChats(auth.data().token)
-    setChats(chatList)
+    console.log(chatList)
+    if(chatList.success === true) {
+      setChats(chatList.result)
+    }
     return chatList
   }
   const create = async (payload: CreateChatPayload) => {

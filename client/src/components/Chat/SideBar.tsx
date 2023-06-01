@@ -1,6 +1,8 @@
 import { Component, For } from "solid-js"
 import { ChatInstance } from "../../services/chats"
 import { Avatar } from "../Avatar"
+import { A } from "@solidjs/router"
+import { IconPlus } from "@tabler/icons-solidjs"
 
 export type ContactProps = {
   name: string
@@ -19,9 +21,11 @@ export type SideBarProps = {
   chats: ChatInstance[]
 }
 export const SideBar: Component<SideBarProps> = (props) => (
-  <div class="border-r border-r-400 max-w-[220px] w-full">
-    <p class="font-medium mx-6 py-3 border-b border-b-gray-300">Chats</p>
-    <ul class="px-3 py-1.5">
+  <div class="border-r border-r-400 max-w-[220px] w-full flex flex-col pb-6">
+    <div class="mx-6 py-3 border-b border-b-gray-300 flex justify-between items-center">
+      <span class="font-medium">Chats</span>
+    </div>
+    <ul class="px-3 py-1.5 flex-1">
       <For each={props.chats}>
         {(chat) => (
           <li>
@@ -30,5 +34,11 @@ export const SideBar: Component<SideBarProps> = (props) => (
         )}
       </For>
     </ul>
+    <A
+      class="px-3 mx-6 flex justify-between items-center py-1.5 h-10 border rounded-md text-blue-600 hover:border-blue-400 transition-colors font-medium"
+      href="/chats/create"
+    >
+      New Chat <IconPlus size={16} />
+    </A>
   </div>
 )

@@ -13,6 +13,7 @@ export type ChatInstance = {
 
 export async function fetchChats(token: string): Promise<ActionType<ChatInstance[]>> {
   const res = await fetch(`${serverUrl}/chats`, {
+    mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`

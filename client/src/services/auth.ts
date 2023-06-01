@@ -69,7 +69,7 @@ export async function signin(payload: SigninPayload): Promise<ActionType<AuthDat
 
 export function saveUserToLocal(user: User, token: string) {
   window.localStorage.setItem('user', JSON.stringify(user))
-  window.localStorage.setItem('token', JSON.stringify(token))
+  window.localStorage.setItem('token', token)
 }
 
 export function getUserfromLocal(): AuthData | undefined {

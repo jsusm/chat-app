@@ -11,7 +11,7 @@ export default function Chat() {
   return (
     <>
       <Header />
-      <div class="flex h-full">
+      <div class="flex flex-1">
         <SideBar chats={chats.data} />
         <div class="flex flex-col col-span-5 flex-1 relative max-w-4xl mx-auto">
           <ChatHeader />

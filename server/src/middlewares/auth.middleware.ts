@@ -27,6 +27,7 @@ export async function isAuth(req: Request, res: Response, next: NextFunction) {
     return;
   }
 
+  console.log(authHeader)
   const [, token] = authHeader.split(" ");
   if (!token) {
     return;
