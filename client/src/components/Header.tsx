@@ -1,6 +1,7 @@
 import { Show } from "solid-js";
 import { useAuth } from "../context/auth";
 import { Button } from "./Button";
+import styles from './Chat/layout.module.css'
 
 export const Profile = (props: { name: string, onLogout: () => void }) => (
   <div class="flex gap-3 items-center">
@@ -23,7 +24,7 @@ export const Profile = (props: { name: string, onLogout: () => void }) => (
 export function Header() {
   const auth = useAuth()
   return (
-    <header class="flex justify-between items-center px-4 py-3 sm:px-8">
+    <header class={`flex justify-between items-center px-4 py-3 sm:px-8 ${styles.header}`}>
       <span class="text-lg font-extrabold text-gray-800 leading-9">
         Chat app
       </span>

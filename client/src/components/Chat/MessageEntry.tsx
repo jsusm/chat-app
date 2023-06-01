@@ -13,7 +13,7 @@ export const MessageEntry: Component<Message> = (props) => {
           "self-start": auth.data().user.id !== props.authorId,
       }}>
       <div
-        class="px-3 py-1.5 text-gray-800 rounded-md max-w-[300px] drop-shadow"
+        class="px-3 py-1.5 rounded-md max-w-[300px] drop-shadow"
         classList={{
           "bg-blue-600 text-gray-50": auth.data().user.id === props.authorId,
           "text-gray-800 border border-gray-300": auth.data().user.id !== props.authorId,
@@ -22,7 +22,7 @@ export const MessageEntry: Component<Message> = (props) => {
           {props.content}
         </p>
       </div>
-        <p class="text-xs pt-1 text-gray-600">
+        <p class="text-xs pt-1 text-gray-500">
           {new Intl.DateTimeFormat('en-US', dateFormatOptions).format(props.createdAt)}
         </p>
     </div>

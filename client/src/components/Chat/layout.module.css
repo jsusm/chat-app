@@ -1,0 +1,12 @@
+.container {
+  --header-height: 60px;
+  height: 100vh;
+}
+
+.header {
+  height: var(--header-height);
+}
+
+.chatContainer {
+  height: calc(100vh - var(--header-height));
+}
