@@ -39,6 +39,7 @@ export class WS {
             socket.join(`chat-${s.chatId}`)
           })
           console.log('socketRooms:', socket.rooms)
+          next()
         })
     })
   }

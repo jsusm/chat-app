@@ -14,7 +14,7 @@ export interface Message {
 
 namespace WebSocket {
   interface ServerToClientEvents {
-    'message': (msg: Message) => void
+    'message': (msg: Message, chatId: number) => void
   }
 
   interface ClientToServerEvents {

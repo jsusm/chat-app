@@ -36,10 +36,11 @@ router.post('/:chatId', isAuth, (req, res, next) => {
     res.status(201)
     const msg = {...message, authorId: req.user.id}
     res.json(msg)
+    console.log(`Emiting data to chat-${params.chatId}`)
     WS.instance.io
       .in(`chat-${params.chatId}`)
       .except(`user-${req.user.id}`)
-      .emit('message', msg)
+      .emit('message', msg, params.chatId)
   } catch (error) {
     next(error)
   }

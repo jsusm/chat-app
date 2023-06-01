@@ -3,6 +3,7 @@ import { createStore, Store } from 'solid-js/store'
 import { ChatInstance, CreateChatPayload, createChat, fetchChats } from "../services/chats";
 import { useAuth } from "./auth";
 import { CreateMessagePayload, Message, createMessage, fetchMessages } from "../services/messages";
+import { connectSocket } from "../lib/socket";
 
 export type ChatStore = Array<ChatInstance & { messages: Message[] }>
 
@@ -50,6 +51,22 @@ export function ChatProvider(props: ParentProps) {
           setChats(c => c.id === selectedChatId(), 'messages', res.result)
         }
       })
+  })
+  // connect to web socket
+  createEffect(() => {
+    if (!auth.data()) return
+    console.log('Connecting socket...')
+    const socket = connectSocket(auth.data().token)
+    socket.on('connect', () => {
+      console.log('socket connected!')
+    })
+    socket.on('connect_error', (err) => {
+      console.log('socket error: ', err)
+    })
+    socket.on('message', (msg, chatId) => {
+      console.log('new Message: asdflkj')
+      setChats(c => c.id === chatId, 'messages', x => [{ ...msg, createdAt: new Date(msg.createdAt) }, ...x])
+    })
   })
   return (
     <chatContext.Provider
