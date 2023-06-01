@@ -36,7 +36,7 @@ export function AuthProvider(props: ParentProps) {
     setAuth(undefined)
   }
   // verify token authenticity
-  if (auth().token) {
+  if (auth()) {
     verifyToken(auth().token)
       .then(res => {
         if (res.success === false) {
