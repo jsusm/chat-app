@@ -7,7 +7,7 @@ export default function Home() {
   const auth = useAuth()
   return (
     <div class="bg-gray-50 isolate h-screen max-h-screen flex flex-col">
-      <Show when={auth.data().user} fallback={<LandingSection />}>
+      <Show when={auth.data()} fallback={<LandingSection />}>
         <Chat />
       </Show>
     </div>

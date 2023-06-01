@@ -1,4 +1,4 @@
-import { Accessor, ParentProps, createContext, createSignal, useContext } from "solid-js";
+import { Accessor, ParentProps, createContext, createEffect, createSignal, useContext } from "solid-js";
 import { AuthData, SigninPayload, SignupPayload, signin as _signin, signup as _signup, clearUserData } from "../services/auth";
 import { getUserfromLocal } from "../services/auth";
 
