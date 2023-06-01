@@ -24,17 +24,20 @@ export const Contact: Component<ContactProps> = (props) => (
 
 export type SideBarProps = {
   chats: ChatInstance[]
+  open: boolean
+  onSelectChat: (id: number) => void
 }
 export const SideBar: Component<SideBarProps> = (props) => {
-  const chats = useChats()
   return (
-    <div class="border-r border-r-400 max-w-[220px] w-full flex flex-col">
+    <div
+      style={{ left: props.open ? '0%' : '-100%' }}
+      class="border-r border-r-400 max-w-[220px] w-full z-20 h-full flex flex-col bg-white absolute shadow-md sm:static sm:shadow-none pb-6 transition-all">
       <ul class="px-3 py-1.5 flex-1">
         <For each={props.chats}>
           {(chat) => (
             <li>
               <Contact
-                onClick={() => chats.selectChat(chat.id)}
+                onClick={() => props.onSelectChat(chat.id)}
                 name={chat.member.name}
               />
             </li>

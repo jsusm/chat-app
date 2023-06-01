@@ -23,7 +23,7 @@ export const Chat: Component<ChatProps> = (props) => {
     }
   }
   return (
-    <div class="flex flex-col flex-1 relative max-w-4xl mx-auto h-full ">
+    <div class="flex flex-col flex-1 relative max-w-4xl mx-auto h-full pb-6">
       <ChatHeader />
       <div class="flex flex-col-reverse overflow-y-auto h-full px-6 py-6 mb-3 gap-3 flex-1">
         <For each={props.chat.messages}>
