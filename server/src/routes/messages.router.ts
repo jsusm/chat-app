@@ -26,10 +26,14 @@ router.post('/:chatId', isAuth, (req, res, next) => {
     const message = db
       .insert(messages)
       .values({ content: body.content, chatSubId: sub.id, createdAt: new Date() })
-      .returning()
+      .returning({
+        id: messages.id,
+        content: messages.content,
+        createdAt: messages.createdAt,
+      })
       .get()
     res.status(201)
-    res.json(message)
+    res.json({...message, authorId: req.user.id})
   } catch (error) {
     next(error)
   }
@@ -44,23 +48,24 @@ router.get('/:chatId', isAuth, (req, res, next) => {
         id: messages.id,
         content: messages.content,
         createdAt: messages.createdAt,
-        userId: users.id,
+        authorId: users.id,
       })
       .from(chats)
-      .innerJoin(chatSubs, eq(chatSubs.chatId, chats.id))
-      .innerJoin(users, eq(chatSubs.userId, users.id))
-      .innerJoin(messages, eq(messages.chatSubId, chatSubs.id))
+      .leftJoin(chatSubs, eq(chatSubs.chatId, chats.id))
+      .leftJoin(users, eq(chatSubs.userId, users.id))
+      .leftJoin(messages, eq(messages.chatSubId, chatSubs.id))
       .orderBy(desc(messages.createdAt))
       .where(
         and(
           eq(chats.id, params.chatId),
           lt(messages.createdAt, new Date(pagination.before ?? Date.now())),
-          eq(users.id, req.user.id)
+          // eq(users.id, req.user.id)
         )
       )
       .limit(20)
       .all()
 
+    console.log(messageList)
     res.status(201)
     res.json(messageList)
   } catch (error) {

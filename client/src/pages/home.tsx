@@ -6,8 +6,8 @@ import { useAuth } from "../context/auth"
 export default function Home() {
   const auth = useAuth()
   return (
-    <div class="bg-gray-50 isolate min-h-screen flex flex-col">
-      <Show when={auth.data()} fallback={<LandingSection />}>
+    <div class="bg-gray-50 isolate h-screen max-h-screen flex flex-col">
+      <Show when={auth.data().user} fallback={<LandingSection />}>
         <Chat />
       </Show>
     </div>
