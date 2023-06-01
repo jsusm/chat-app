@@ -4,36 +4,8 @@ import { Header } from "../Header";
 import { useChats } from "../../context/chats";
 import { ChatHeader } from "./ChatHeader";
 import { SideBar } from "./SideBar";
-import { Component, For, Show, createSignal } from "solid-js";
-import { Message } from "../../services/messages";
-import { useAuth } from "../../context/auth";
-
-const MessageEntry: Component<Message> = (props) => {
-  const auth = useAuth()
-  const dateFormatOptions: Intl.DateTimeFormatOptions = {
-    timeStyle: 'short'
-  }
-  return (
-    <div classList={{
-          "self-end text-end": auth.data().user.id === props.authorId,
-          "self-start": auth.data().user.id !== props.authorId,
-      }}>
-      <div
-        class="px-3 py-1.5 text-gray-800 rounded-md max-w-[300px] drop-shadow"
-        classList={{
-          "bg-blue-600 text-gray-50": auth.data().user.id === props.authorId,
-          "text-gray-800 border border-gray-300": auth.data().user.id !== props.authorId,
-        }}>
-        <p class="font-medium">
-          {props.content}
-        </p>
-      </div>
-        <p class="text-xs pt-1 text-gray-600">
-          {new Intl.DateTimeFormat('en-US', dateFormatOptions).format(props.createdAt)}
-        </p>
-    </div>
-  )
-}
+import { For, Show, createSignal } from "solid-js";
+import { MessageEntry } from "./MessageEntry";
 
 export default function Chat() {
   const [message, setMessage] = createSignal('')
