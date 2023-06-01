@@ -28,10 +28,7 @@ export type SideBarProps = {
 export const SideBar: Component<SideBarProps> = (props) => {
   const chats = useChats()
   return (
-    <div class="border-r border-r-400 max-w-[220px] w-full flex flex-col pb-6">
-      <div class="mx-6 py-3 border-b border-b-gray-300 flex justify-between items-center">
-        <span class="font-medium">Chats</span>
-      </div>
+    <div class="border-r border-r-400 max-w-[220px] w-full flex flex-col">
       <ul class="px-3 py-1.5 flex-1">
         <For each={props.chats}>
           {(chat) => (
