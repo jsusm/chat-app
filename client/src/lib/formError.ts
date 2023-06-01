@@ -27,6 +27,5 @@ export function parseFormError<Schema extends Record<string, any>>(error: ApiFor
       if (err) out.fieldError[key] = err
     }
   }
-  console.log(out)
   return out
 }

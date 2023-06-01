@@ -9,7 +9,7 @@ export type ChatStore = Array<ChatInstance & { messages: Message[] }>
 const chatContext = createContext<{
   data: Store<ChatStore>;
   selectedChatId: Accessor<number>;
-  fetch: () => ReturnType<typeof fetchChats>;
+  fetch: (token: string) => ReturnType<typeof fetchChats>;
   selectChat: (id: number) => void;
   sendMessage: (payload: CreateMessagePayload) => void;
   create: (payload: CreateChatPayload) => ReturnType<typeof createChat>;
@@ -23,8 +23,8 @@ export function ChatProvider(props: ParentProps) {
   const auth = useAuth()
 
   const selectChat = (id: number) => setSelectedChatId(id)
-  const fetch = async () => {
-    const chatList = await fetchChats(auth.data().token)
+  const fetch = async (token: string) => {
+    const chatList = await fetchChats(token)
     console.log(chatList)
     if (chatList.success === true) {
       setChats(chatList.result.map(x => ({ ...x, messages: [] })))

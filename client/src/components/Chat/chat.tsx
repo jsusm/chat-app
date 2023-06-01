@@ -4,12 +4,14 @@ import { Header } from "../Header";
 import { useChats } from "../../context/chats";
 import { ChatHeader } from "./ChatHeader";
 import { SideBar } from "./SideBar";
-import { For, Show, createSignal } from "solid-js";
+import { For, Show, createEffect, createSignal } from "solid-js";
 import { MessageEntry } from "./MessageEntry";
+import { useAuth } from "../../context/auth";
 
 export default function Chat() {
   const [message, setMessage] = createSignal('')
   const chats = useChats()
+  const auth = useAuth()
   const onSubmit = (e: Event) => {
     e.preventDefault()
     if (message() !== '') {
@@ -18,7 +20,9 @@ export default function Chat() {
       setMessage('')
     }
   }
-  chats.fetch()
+  createEffect(() => {
+    chats.fetch(auth.data().token)
+  })
   const selectedChat = () => chats.data.find(c => c.id === chats.selectedChatId())
   return (
     <>
