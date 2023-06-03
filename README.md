@@ -48,3 +48,8 @@ Client
  - /api/auth/signin
  - /api/chats | creates and read chats
  - /api/messages/:chatId | creates and read messages
+
+## Screenshots
+![Landing page](./assets/ss-landing.png)
+![Singup page](./assets/ss-signup.png)
+![chat](./assets/ss-chat.png)
