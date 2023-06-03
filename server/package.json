@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon",
     "develop": "node --loader ts-node/esm src/main.ts",
-    "start": "node dist/main.ts",
+    "start": "node dist/main.js",
     "build": "tsc",
     "db:create-migration": "drizzle-kit generate:sqlite"
   },

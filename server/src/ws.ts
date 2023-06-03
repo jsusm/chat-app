@@ -14,7 +14,7 @@ export class WS {
     WS.instance = this
     this.io = new Server(httpServer, {
       cors: {
-        origin: ['http://localhost:5731', 'http://localhost:3000']
+        origin: ['http://localhost:4173', 'http://localhost:3000']
       }
     })
     // middlewares
