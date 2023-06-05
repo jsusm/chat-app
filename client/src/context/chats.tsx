@@ -55,17 +55,12 @@ export function ChatProvider(props: ParentProps) {
   // connect to web socket
   createEffect(() => {
     if (!auth.data()) return
-    console.log('Connecting socket...')
     const socket = connectSocket(auth.data().token)
-    socket.on('connect', () => {
-      console.log('socket connected!')
-    })
-    socket.on('connect_error', (err) => {
-      console.log('socket error: ', err)
-    })
-    socket.on('message', (msg, chatId) => {
-      console.log('new Message: asdflkj')
+    socket.on('message:push', (msg, chatId) => {
       setChats(c => c.id === chatId, 'messages', x => [{ ...msg, createdAt: new Date(msg.createdAt) }, ...x])
+    })
+    socket.on('chat:push', (chat) => {
+      setChats(x => [...x, {...chat, messages: []}])
     })
   })
   return (
