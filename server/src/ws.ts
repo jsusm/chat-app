@@ -3,7 +3,7 @@ import { WebSocket } from "./types.js";
 import * as http from 'http'
 import { verifyJWT } from "./lib/jwt.js";
 import { db } from "./db/db.js";
-import { chatSubs, chats } from "./db/schema.js";
+import { chatSubs } from "./db/schema.js";
 import { eq } from "drizzle-orm";
 
 export class WS {

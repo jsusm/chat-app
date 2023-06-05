@@ -12,9 +12,19 @@ export interface Message {
   createdAt: Date
 }
 
+export interface Chat {
+  id: number;
+  subId: number;
+  member: {
+    id: number;
+    name: string;
+  };
+}
+
 namespace WebSocket {
   interface ServerToClientEvents {
-    'message': (msg: Message, chatId: number) => void
+    'message:push': (msg: Message, chatId: number) => void
+    'chat:push': (chat: Chat) => void
   }
 
   interface ClientToServerEvents {

@@ -47,10 +47,11 @@ router.post('/', isAuth, (req: Request, res: Response, next: NextFunction) => {
       .returning({ id: chats.id })
       .get()
 
-    db
+    const coupleSub = db
       .insert(chatSubs)
       .values({ chatId: chat.id, userId: req.user.id })
-      .run()
+      .returning({id: chatSubs.id})
+      .get()
 
     db
       .insert(chatSubs)
@@ -61,6 +62,15 @@ router.post('/', isAuth, (req: Request, res: Response, next: NextFunction) => {
     // subcribe to chat's users to chat-{id} room
     WS.instance.io.in(`user-${req.user.id}`).socketsJoin(`chat-${chat.id}`)
     WS.instance.io.in(`user-${couple.id}`).socketsJoin(`chat-${chat.id}`)
+
+    // Notify couple
+    const coupleUser = db
+      .select({name: users.name, id: users.id})
+      .from(users)
+      .where(eq(users.id, couple.id))
+      .get()
+
+    WS.instance.io.in(`chat-${chat.id}`).emit('chat:push', {member: coupleUser, id: chat.id, subId: coupleSub.id})
   } catch (error) {
     next(error)
   }

@@ -41,7 +41,7 @@ router.post('/:chatId', isAuth, (req, res, next) => {
     WS.instance.io
       .in(`chat-${params.chatId}`)
       .except(`user-${req.user.id}`)
-      .emit('message', msg, params.chatId)
+      .emit('message:push', msg, params.chatId)
   } catch (error) {
     next(error)
   }
