@@ -9,7 +9,7 @@ export const Profile = (props: { name: string, onLogout: () => void }) => (
     <div class="w-9 aspect-square rounded-full overflow-hidden" >
       <img src={`https://api.dicebear.com/6.x/micah/svg?seed=${props.name}`} />
     </div>
-    <span class="font-medium hidden :inline">
+    <span class="font-medium hidden sm:inline">
       {props.name}
     </span>
     <span class="w-[2px] bg-gray-300 py-3" />
