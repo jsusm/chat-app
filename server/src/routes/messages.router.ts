@@ -36,7 +36,8 @@ router.post('/:chatId', isAuth, (req, res, next) => {
     res.status(201)
     const msg = {...message, authorId: req.user.id}
     res.json(msg)
-    console.log(`Emiting data to chat-${params.chatId}`)
+
+    // Notify other users in the chat
     WS.instance.io
       .in(`chat-${params.chatId}`)
       .except(`user-${req.user.id}`)
@@ -66,7 +67,6 @@ router.get('/:chatId', isAuth, (req, res, next) => {
         and(
           eq(chats.id, params.chatId),
           lt(messages.createdAt, new Date(pagination.before ?? Date.now())),
-          // eq(users.id, req.user.id)
         )
       )
       .limit(20)

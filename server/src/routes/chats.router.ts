@@ -35,7 +35,6 @@ router.post('/', isAuth, (req: Request, res: Response, next: NextFunction) => {
       .innerJoin(users, and(eq(chatSubs.userId, users.id), or(eq(chatSubs.userId, couple.id), eq(chatSubs.userId, req.user.id))))
       .all()
 
-    console.log(relation)
     if (relation.length === 2) {
       res.sendStatus(201)
     }
