@@ -3,7 +3,7 @@ import { User } from "../types.js";
 import { verifyJWT } from "../lib/jwt.js";
 
 declare global {
-  namespace Express  {
+  namespace Express {
     export interface Request {
       user: User
     }
