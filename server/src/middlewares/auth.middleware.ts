@@ -31,17 +31,21 @@ export async function isAuth(req: Request, res: Response, next: NextFunction) {
   if (!token) {
     return;
   }
-  let user: User;
-  try {
-    const { user: _u } = await verifyJWT(token);
-    user = _u;
-  } catch (error) {
+  verifyJWT(token).then(jwtRes => {
+    if (!jwtRes) {
+      res.status(401);
+      res.json({
+        message: "Invalid token.",
+      });
+      return
+    }
+    req.user = jwtRes.user;
+    next();
+  }).catch(() => {
     res.status(401);
     res.json({
       message: "Invalid token.",
     });
     return;
-  }
-  req.user = user;
-  next();
+  });
 }

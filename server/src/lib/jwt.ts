@@ -4,8 +4,8 @@ import * as jose from 'jose'
 const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET ?? 'secret')
 
 export async function signJWT(user: User) {
-  return await new jose.SignJWT({name: user.name})
-    .setProtectedHeader({'alg': 'HS256' })
+  return await new jose.SignJWT({ name: user.name })
+    .setProtectedHeader({ 'alg': 'HS256' })
     .setSubject(user.id.toString())
     .setIssuedAt()
     .setExpirationTime('2h')

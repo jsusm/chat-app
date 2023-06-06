@@ -41,6 +41,10 @@ export class WS {
           console.log('socketRooms:', socket.rooms)
           next()
         })
+        .catch(() => {
+          next(new Error('Invalid token.'))
+          return
+        })
     })
   }
   public static getInstace(): WS {
