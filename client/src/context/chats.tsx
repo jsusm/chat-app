@@ -54,13 +54,16 @@ export function ChatProvider(props: ParentProps) {
   })
   // connect to web socket
   createEffect(() => {
-    if (!auth.data()) return
+    if (!auth.data()) {
+      setChats([])
+      return
+    }
     const socket = connectSocket(auth.data().token)
     socket.on('message:push', (msg, chatId) => {
       setChats(c => c.id === chatId, 'messages', x => [{ ...msg, createdAt: new Date(msg.createdAt) }, ...x])
     })
     socket.on('chat:push', (chat) => {
-      setChats(x => [...x, {...chat, messages: []}])
+      setChats(x => [...x, { ...chat, messages: [] }])
     })
   })
   return (
