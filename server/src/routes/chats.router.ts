@@ -9,6 +9,8 @@ import { WS } from '../ws.js'
 
 const router = Router()
 
+const _sub = alias(chatSubs, "sub")
+
 /** POST /api/chats
  * Creates a new chat
  */
@@ -29,14 +31,20 @@ router.post('/', isAuth, (req: Request, res: Response, next: NextFunction) => {
     }
     // check if a chat between couple and user is already created
     const relation = db
-      .select()
-      .from(chats)
-      .leftJoin(chatSubs, eq(chatSubs.chatId, chats.id))
-      .innerJoin(users, and(eq(chatSubs.userId, users.id), or(eq(chatSubs.userId, couple.id), eq(chatSubs.userId, req.user.id))))
+      .select({
+        id: _sub.id,
+      })
+      .from(chatSubs)
+      .innerJoin(chats, eq(chatSubs.chatId, chats.id))
+      .innerJoin(_sub, eq(chats.id, _sub.chatId))
+      .where(and(
+        eq(chatSubs.userId, req.user.id),
+        eq(_sub.userId, couple.id)
+      ))
       .all()
 
     // Do not create any chat if already exists
-    if (relation.length === 2) {
+    if (relation.length >= 1) {
       res.sendStatus(201)
       return
     }
@@ -47,30 +55,24 @@ router.post('/', isAuth, (req: Request, res: Response, next: NextFunction) => {
       .returning({ id: chats.id })
       .get()
 
-    const coupleSub = db
-      .insert(chatSubs)
-      .values({ chatId: chat.id, userId: req.user.id })
-      .returning({id: chatSubs.id})
-      .get()
-
     db
       .insert(chatSubs)
-      .values({ chatId: chat.id, userId: couple.id })
+      .values({ chatId: chat.id, userId: req.user.id })
       .run()
 
+    const coupleSub = db
+      .insert(chatSubs)
+      .values({ chatId: chat.id, userId: couple.id })
+      .returning({ id: chatSubs.id })
+      .get()
+
     res.sendStatus(201)
-    // subcribe to chat's users to chat-{id} room
+    // subscribe chat's users to chat-{id} room
     WS.instance.io.in(`user-${req.user.id}`).socketsJoin(`chat-${chat.id}`)
     WS.instance.io.in(`user-${couple.id}`).socketsJoin(`chat-${chat.id}`)
 
-    // Notify couple
-    const coupleUser = db
-      .select({name: users.name, id: users.id})
-      .from(users)
-      .where(eq(users.id, couple.id))
-      .get()
-
-    WS.instance.io.in(`chat-${chat.id}`).emit('chat:push', {member: coupleUser, id: chat.id, subId: coupleSub.id})
+    // notify chat creation
+    WS.instance.io.in(`chat-${chat.id}`).emit('chat:push', { member: req.user, id: chat.id, subId: coupleSub.id })
   } catch (error) {
     next(error)
   }
@@ -81,7 +83,6 @@ router.post('/', isAuth, (req: Request, res: Response, next: NextFunction) => {
  */
 router.get('/', isAuth, (req: Request, res: Response, next: NextFunction) => {
   try {
-    const _sub = alias(chatSubs, "sub")
     const chatList = db
       .select({
         id: chats.id,
